@@ -1,11 +1,365 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>제주 — 돌, 바람, 여자의 섬</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+<style>
+  :root{
+    --basalt:#19180F;
+    --basalt-2:#26241A;
+    --tangerine:#E8792F;
+    --sea:#2E8C82;
+    --sand:#F4EBDA;
+    --stone:#8B8474;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Pretendard', -apple-system, sans-serif;
+    background:var(--sand);
+    color:var(--basalt);
+    line-height:1.6;
+  }
+  h1,h2,h3{font-family:'Gowun Batang', serif;}
+
+  /* ===== nav ===== */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 6vw;
+    background:rgba(25,24,15,0.0);
+    transition:background .3s ease, padding .3s ease;
+  }
+  nav.scrolled{
+    background:rgba(25,24,15,0.92);
+    padding:14px 6vw;
+    backdrop-filter:blur(6px);
+  }
+  nav .logo{
+    font-family:'Gowun Batang', serif;
+    font-size:1.3rem; font-weight:700;
+    color:var(--sand);
+    letter-spacing:0.05em;
+  }
+  nav ul{
+    display:flex; gap:32px; list-style:none;
+  }
+  nav a{
+    color:var(--sand); text-decoration:none;
+    font-size:0.92rem; opacity:0.85;
+    transition:opacity .2s;
+  }
+  nav a:hover, nav a:focus-visible{ opacity:1; color:var(--tangerine); outline:none; }
+
+  /* ===== hero ===== */
+  .hero{
+    position:relative;
+    height:100svh; min-height:560px;
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    text-align:center;
+    background:
+      radial-gradient(ellipse 120% 60% at 50% 100%, rgba(46,140,130,0.35), transparent 70%),
+      linear-gradient(180deg, var(--basalt) 0%, var(--basalt-2) 100%);
+    overflow:hidden;
+    padding:0 6vw;
+  }
+  .hero .eyebrow{
+    color:var(--tangerine);
+    letter-spacing:0.3em;
+    font-size:0.78rem;
+    margin-bottom:22px;
+    text-transform:uppercase;
+  }
+  .hero h1{
+    font-size:clamp(4rem, 14vw, 9rem);
+    color:var(--sand);
+    line-height:0.95;
+    letter-spacing:0.02em;
+  }
+  .hero p{
+    margin-top:26px;
+    color:var(--stone);
+    font-size:clamp(1rem, 2vw, 1.2rem);
+    max-width:36ch;
+  }
+  .hero .scroll-cue{
+    position:absolute; bottom:34px; left:50%; transform:translateX(-50%);
+    color:var(--sand); opacity:0.5;
+    font-size:0.75rem; letter-spacing:0.2em;
+    animation:bob 2.4s ease-in-out infinite;
+  }
+  @keyframes bob{
+    0%,100%{transform:translate(-50%,0);}
+    50%{transform:translate(-50%,8px);}
+  }
+
+  /* basalt ridge divider (signature motif) */
+  .ridge{
+    display:block; width:100%; height:70px;
+    fill:var(--sand);
+  }
+  .ridge-dark{ fill:var(--basalt); }
+
+  /* ===== sections ===== */
+  section{
+    padding:110px 6vw;
+    max-width:1180px; margin:0 auto;
+  }
+  .section-head{
+    display:flex; align-items:baseline; gap:18px;
+    margin-bottom:56px;
+  }
+  .section-head .kr{
+    font-size:clamp(2rem, 4vw, 2.8rem);
+  }
+  .section-head .en{
+    color:var(--stone); font-size:0.85rem; letter-spacing:0.2em; text-transform:uppercase;
+  }
+  .section-head::after{
+    content:''; flex:1; height:1px; background:var(--stone); opacity:0.35;
+  }
+
+  /* intro */
+  .intro-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:start;
+  }
+  .intro-grid p{ font-size:1.08rem; color:#3a382e; }
+  .intro-grid p + p{ margin-top:18px; }
+  .fact-list{ list-style:none; border-top:1px solid rgba(139,132,116,0.4); }
+  .fact-list li{
+    display:flex; justify-content:space-between;
+    padding:16px 0; border-bottom:1px solid rgba(139,132,116,0.4);
+    font-size:0.95rem;
+  }
+  .fact-list li span:first-child{ color:var(--stone); }
+  .fact-list li span:last-child{ font-weight:600; }
+
+  /* 삼다 triad */
+  .triad{
+    background:var(--basalt);
+    color:var(--sand);
+    position:relative;
+  }
+  .triad .section-head .en, .triad .section-head .kr{ color:var(--sand); }
+  .triad .section-head::after{ background:var(--stone); }
+  .triad-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
+    background:rgba(244,235,218,0.12);
+  }
+  .triad-card{
+    background:var(--basalt);
+    padding:44px 30px;
+    transition:background .35s ease;
+  }
+  .triad-card:hover{ background:var(--basalt-2); }
+  .triad-card .glyph{
+    font-family:'Gowun Batang', serif;
+    font-size:2.6rem; color:var(--tangerine);
+    margin-bottom:18px;
+  }
+  .triad-card h3{ font-size:1.35rem; margin-bottom:10px; }
+  .triad-card p{ color:var(--stone); font-size:0.95rem; }
+
+  /* 명소 */
+  .spot-list{ display:flex; flex-direction:column; }
+  .spot{
+    display:grid; grid-template-columns:70px 1fr 160px;
+    align-items:center; gap:24px;
+    padding:26px 0;
+    border-bottom:1px solid rgba(139,132,116,0.4);
+  }
+  .spot:first-child{ border-top:1px solid rgba(139,132,116,0.4); }
+  .spot .no{ color:var(--tangerine); font-size:0.85rem; font-weight:700; }
+  .spot h3{ font-size:1.25rem; margin-bottom:4px; }
+  .spot p{ color:var(--stone); font-size:0.9rem; }
+  .spot .tag{
+    justify-self:end;
+    font-size:0.78rem; color:var(--sea);
+    border:1px solid var(--sea); border-radius:999px;
+    padding:6px 14px; white-space:nowrap;
+  }
+
+  /* 미식 */
+  .food-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:22px;
+  }
+  .food-card{
+    background:#fff; border:1px solid rgba(139,132,116,0.3);
+    padding:28px 20px; text-align:center;
+    border-radius:2px;
+  }
+  .food-card .emoji{ font-size:2.1rem; display:block; margin-bottom:14px; }
+  .food-card h3{ font-size:1.05rem; margin-bottom:6px; }
+  .food-card p{ font-size:0.85rem; color:var(--stone); }
+
+  footer{
+    background:var(--basalt);
+    color:var(--stone);
+    text-align:center;
+    padding:44px 6vw;
+    font-size:0.82rem;
+  }
+  footer strong{ color:var(--sand); }
+
+  @media (max-width:760px){
+    .intro-grid{ grid-template-columns:1fr; }
+    .triad-grid{ grid-template-columns:1fr; }
+    .spot{ grid-template-columns:40px 1fr; }
+    .spot .tag{ display:none; }
+    .food-grid{ grid-template-columns:repeat(2,1fr); }
+    nav ul{ gap:18px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .hero .scroll-cue{ animation:none; }
+  }
+</style>
 </head>
 <body>
-    <p>hello</p>
+
+<nav id="nav">
+  <div class="logo">濟州 · 제주</div>
+  <ul>
+    <li><a href="#intro">소개</a></li>
+    <li><a href="#samda">삼다</a></li>
+    <li><a href="#spots">명소</a></li>
+    <li><a href="#food">미식</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Volcanic Island · Republic of Korea</div>
+  <h1>제주</h1>
+  <p>화산이 빚은 섬, 바람이 지나는 섬 — 육지와는 다른 시간이 흐르는 곳.</p>
+  <div class="scroll-cue">SCROLL ↓</div>
+</header>
+
+<svg class="ridge" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true">
+  <path class="ridge-dark" d="M0,70 L0,40 L40,52 L80,20 L120,45 L170,10 L230,48 L270,22 L320,50 L380,15 L430,46 L480,28 L540,50 L600,18 L660,44 L720,25 L780,50 L840,12 L900,46 L960,30 L1020,50 L1080,20 L1140,46 L1200,35 L1200,70 Z"/>
+</svg>
+
+<section id="intro">
+  <div class="section-head">
+    <span class="kr">소개</span>
+    <span class="en">About Jeju</span>
+  </div>
+  <div class="intro-grid">
+    <div>
+      <p>제주는 약 180만 년 전 화산 활동으로 만들어진 대한민국 최대의 섬입니다. 섬 중앙에는 한라산이 우뚝 솟아 있고, 해안을 따라 검은 현무암과 오름(작은 화산체)들이 독특한 풍경을 이룹니다.</p>
+      <p>2007년 한라산 천연보호구역과 성산일출봉, 거문오름 용암동굴계는 유네스코 세계자연유산으로 등재되었습니다. 제주는 자연뿐 아니라 육지와 구별되는 고유한 방언과 생활 문화를 간직한 섬이기도 합니다.</p>
+    </div>
+    <ul class="fact-list">
+      <li><span>면적</span><span>1,845 km²</span></li>
+      <li><span>최고봉</span><span>한라산 1,947m</span></li>
+      <li><span>세계유산 등재</span><span>2007년</span></li>
+      <li><span>대표 방언</span><span>제주어</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="triad" id="samda">
+  <div class="section-head">
+    <span class="kr">삼다(三多)</span>
+    <span class="en">Three Abundances</span>
+  </div>
+  <div class="triad-grid">
+    <div class="triad-card">
+      <div class="glyph">石</div>
+      <h3>돌</h3>
+      <p>섬 전체를 뒤덮은 현무암. 밭과 집을 두른 검은 돌담(밭담)은 총 길이가 지구 둘레에 맞먹는다고 전해집니다.</p>
+    </div>
+    <div class="triad-card">
+      <div class="glyph">風</div>
+      <h3>바람</h3>
+      <p>사면이 바다인 섬을 쉼 없이 지나는 바람. 초가지붕을 동여맨 줄과 낮게 두른 돌담은 모두 바람과 함께 살아온 지혜입니다.</p>
+    </div>
+    <div class="triad-card">
+      <div class="glyph">女</div>
+      <h3>여자</h3>
+      <p>산소통 없이 잠수해 해산물을 채취하는 해녀. 그 물질 문화는 2016년 유네스코 인류무형문화유산으로 등재되었습니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="spots">
+  <div class="section-head">
+    <span class="kr">가볼 곳</span>
+    <span class="en">Landmarks</span>
+  </div>
+  <div class="spot-list">
+    <div class="spot">
+      <span class="no">01</span>
+      <div><h3>성산일출봉</h3><p>바다에서 솟아오른 거대한 응회구. 정상에서 보는 일출로 유명하다.</p></div>
+      <span class="tag">세계자연유산</span>
+    </div>
+    <div class="spot">
+      <span class="no">02</span>
+      <div><h3>한라산</h3><p>남한에서 가장 높은 산이자 휴화산. 정상에는 백록담 화구호가 있다.</p></div>
+      <span class="tag">국립공원</span>
+    </div>
+    <div class="spot">
+      <span class="no">03</span>
+      <div><h3>우도</h3><p>제주 동쪽 끝에 딸린 작은 부속섬. 땅콩 아이스크림과 서빈백사 해변이 유명하다.</p></div>
+      <span class="tag">부속섬</span>
+    </div>
+    <div class="spot">
+      <span class="no">04</span>
+      <div><h3>협재해수욕장</h3><p>에메랄드빛 바다와 흰 모래, 바로 앞에 떠 있는 비양도가 어우러진다.</p></div>
+      <span class="tag">해변</span>
+    </div>
+    <div class="spot">
+      <span class="no">05</span>
+      <div><h3>만장굴</h3><p>세계에서 손꼽히는 규모의 용암동굴. 거문오름 용암동굴계의 일부다.</p></div>
+      <span class="tag">용암동굴</span>
+    </div>
+  </div>
+</section>
+
+<section id="food">
+  <div class="section-head">
+    <span class="kr">미식</span>
+    <span class="en">Local Food</span>
+  </div>
+  <div class="food-grid">
+    <div class="food-card">
+      <span class="emoji">🐷</span>
+      <h3>흑돼지</h3>
+      <p>제주 재래종 돼지로 만든 두툼한 구이</p>
+    </div>
+    <div class="food-card">
+      <span class="emoji">🍊</span>
+      <h3>한라봉·감귤</h3>
+      <p>제주 화산토에서 자란 달콤한 감귤류</p>
+    </div>
+    <div class="food-card">
+      <span class="emoji">🍜</span>
+      <h3>고기국수</h3>
+      <p>돼지 육수에 말아낸 제주식 국수</p>
+    </div>
+    <div class="food-card">
+      <span class="emoji">🍡</span>
+      <h3>오메기떡</h3>
+      <p>차조로 빚고 팥고물을 묻힌 향토 떡</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>제주, 濟州</strong> — 돌과 바람과 여자가 함께 지켜온 섬</p>
+  <p style="margin-top:8px;">GitHub Pages 배포 실습용 예시 페이지</p>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+</script>
+
 </body>
 </html>
